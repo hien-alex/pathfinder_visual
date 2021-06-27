@@ -1,0 +1,14 @@
+.node {
+  width: 30px;
+  height: 30px;
+  outline: 0.5px solid black;
+  display: inline-flex;
+}
+
+.startNode {
+  background-color: green;
+}
+
+.finishNode {
+  background-color: red;
+}
