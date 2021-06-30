@@ -12,7 +12,7 @@ export default class PathfindingVisualizer extends Component {
 
   componentDidMount() {
     const nodes = [];
-    for (let row = 0; row < 15; row++) {
+    for (let row = 0; row < 21; row++) {
       const currentRow = [];
       for (let col = 0; col < 50; col++) {
         const currentNode = {
@@ -20,6 +20,10 @@ export default class PathfindingVisualizer extends Component {
           row,
           isStart: row === 10 && col === 5,
           isFinish: row === 10 && col === 45,
+          distance: Infinity,
+          isVisited: false,
+          isWall: false,
+          previousNode: null,
         };
         currentRow.push([currentNode]);
       }
