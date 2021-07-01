@@ -14,12 +14,12 @@ export default class PathfindingVisualizer extends Component {
     const nodes = [];
     for (let row = 0; row < 21; row++) {
       const currentRow = [];
-      for (let col = 0; col < 50; col++) {
+      for (let col = 0; col < 35; col++) {
         const currentNode = {
           col,
           row,
           isStart: row === 10 && col === 5,
-          isFinish: row === 10 && col === 45,
+          isFinish: row === 10 && col === 29,
           distance: Infinity,
           isVisited: false,
           isWall: false,
