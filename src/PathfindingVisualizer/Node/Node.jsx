@@ -8,9 +8,10 @@ export default class Node extends Component {
   }
 
   render() {
-    const { isFinish, isStart } = this.props;
+    const { isFinish, isStart, row, col } = this.props;
     return (
       <div
+        id={`node-${row}-${col}`}
         className={`node ${
           isStart ? "startNode" : isFinish ? "finishNode" : ""
         }`}
