@@ -13,10 +13,14 @@
   background-color: red;
 }
 
-.visited-node {
+.visitedNode {
   background-color: blue;
 }
 
-.shortest-path-node {
+.shortestPathNode {
   background-color: palegoldenrod;
+}
+
+.isWall {
+  background-color: black;
 }
