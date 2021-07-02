@@ -69,19 +69,21 @@ export default class PathfindingVisualizer extends Component {
     const createdGrid = grid.slice();
     for (let row = 0; row < 21; row++) {
       for (let col = 0; col < 35; col++) {
-        if (row == START_NODE_ROW && col == START_NODE_COL) {
-          document.getElementById(`node-${row}-${col}`).className =
-            "node startNode";
+        if (!grid[row][col].isWall) {
+          if (row == START_NODE_ROW && col == START_NODE_COL) {
+            document.getElementById(`node-${row}-${col}`).className =
+              "node startNode";
+          }
+          if (row == FINISH_NODE_ROW && col == FINISH_NODE_COL) {
+            document.getElementById(`node-${row}-${col}`).className =
+              "node finishNode";
+          }
+          if (
+            !(row == START_NODE_ROW && col == START_NODE_COL) &&
+            !(row == FINISH_NODE_ROW && col == FINISH_NODE_COL)
+          )
+            document.getElementById(`node-${row}-${col}`).className = "node";
         }
-        if (row == FINISH_NODE_ROW && col == FINISH_NODE_COL) {
-          document.getElementById(`node-${row}-${col}`).className =
-            "node finishNode";
-        }
-        if (
-          !(row == START_NODE_ROW && col == START_NODE_COL) &&
-          !(row == FINISH_NODE_ROW && col == FINISH_NODE_COL)
-        )
-          document.getElementById(`node-${row}-${col}`).className = "node";
       }
     }
     this.setState({ grid: createdGrid });
