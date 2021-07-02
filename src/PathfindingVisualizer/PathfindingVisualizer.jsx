@@ -5,8 +5,8 @@ import { dijkstra, getNodesInShortestPathOrder } from "../Algorithms/Dijkstras";
 
 const START_NODE_ROW = 10;
 const START_NODE_COL = 5;
-const FINISH_NODE_ROW = 10;
-const FINISH_NODE_COL = 29;
+const FINISH_NODE_ROW = 15;
+const FINISH_NODE_COL = 24;
 
 export default class PathfindingVisualizer extends Component {
   constructor(props) {
@@ -49,9 +49,7 @@ export default class PathfindingVisualizer extends Component {
   }
 
   animateDijkstras(visitedNodesInOrder, nodesInShortestPathOrder) {
-    console.log(visitedNodesInOrder.length);
     for (let i = 0; i <= visitedNodesInOrder.length; i++) {
-      console.log(i);
       if (i === visitedNodesInOrder.length) {
         setTimeout(() => {
           this.animateShortestPath(nodesInShortestPathOrder);
@@ -72,12 +70,6 @@ export default class PathfindingVisualizer extends Component {
     const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
     const visitedNodesInOrder = dijkstra(grid, startNode, finishNode);
     const nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode);
-    // console.log(finishNode[0].previousNode);
-    // console.log(finishNode[0].previousNode[0].previousNode);
-    // console.log(finishNode[0].previousNode[0].previousNode[0].previousNode);
-    // console.log(
-    //   finishNode[0].previousNode[0].previousNode[0].previousNode[0].previousNode
-    // );
     this.animateDijkstras(visitedNodesInOrder, nodesInShortestPathOrder);
   }
 
