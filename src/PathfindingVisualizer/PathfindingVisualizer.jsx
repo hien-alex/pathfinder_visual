@@ -87,19 +87,19 @@ export default class PathfindingVisualizer extends Component {
     for (let row = 0; row < 21; row++) {
       for (let col = 0; col < 35; col++) {
         if (!grid[row][col].isWall) {
-          if (row == START_NODE_ROW && col == START_NODE_COL) {
+          if (row === START_NODE_ROW && col === START_NODE_COL) {
             document.getElementById(`node-${row}-${col}`).className =
               "node startNode";
             createdGrid[row][col].isVisited = false;
           }
-          if (row == FINISH_NODE_ROW && col == FINISH_NODE_COL) {
+          if (row === FINISH_NODE_ROW && col === FINISH_NODE_COL) {
             document.getElementById(`node-${row}-${col}`).className =
               "node finishNode";
             createdGrid[row][col].isVisited = false;
           }
           if (
-            !(row == START_NODE_ROW && col == START_NODE_COL) &&
-            !(row == FINISH_NODE_ROW && col == FINISH_NODE_COL)
+            !(row === START_NODE_ROW && col === START_NODE_COL) &&
+            !(row === FINISH_NODE_ROW && col === FINISH_NODE_COL)
           ) {
             document.getElementById(`node-${row}-${col}`).className = "node";
             createdGrid[row][col].isVisited = false;

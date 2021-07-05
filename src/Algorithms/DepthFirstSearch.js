@@ -1,5 +1,5 @@
 export function DFS(grid, startNode, finishNode) {
-  if (!startNode || !finishNode || startNode == finishNode) {
+  if (!startNode || !finishNode || startNode === finishNode) {
     return false;
   }
 
