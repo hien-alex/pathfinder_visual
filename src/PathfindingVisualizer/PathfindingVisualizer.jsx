@@ -4,10 +4,10 @@ import "./Grid.css";
 import { dijkstra, getNodesInShortestPathOrder } from "../Algorithms/Dijkstras";
 import { DFS } from "../Algorithms/DepthFirstSearch";
 
-const START_NODE_ROW = 10;
-const START_NODE_COL = 5;
-const FINISH_NODE_ROW = 15;
-const FINISH_NODE_COL = 24;
+var START_NODE_ROW = 10;
+var START_NODE_COL = 5;
+var FINISH_NODE_ROW = 10;
+var FINISH_NODE_COL = 29;
 
 export default class PathfindingVisualizer extends Component {
   constructor(props) {
@@ -15,6 +15,8 @@ export default class PathfindingVisualizer extends Component {
     this.state = {
       grid: [],
       mousePressed: false,
+      newStartPressed: false,
+      newFinishPressed: false,
       initialGrid: [],
     };
   }
@@ -27,24 +29,45 @@ export default class PathfindingVisualizer extends Component {
 
   handleMouseDown(row, col) {
     if (row === START_NODE_ROW && col === START_NODE_COL) {
-      this.setState({ mousePressed: true });
+      this.setState({ newStartPressed: true });
       return;
     }
-    if (row === FINISH_NODE_ROW && col === FINISH_NODE_COL) return;
+    if (row === FINISH_NODE_ROW && col === FINISH_NODE_COL) {
+      this.setState({ newFinishPressed: true });
+      return;
+    }
     const wallGrid = getGridWithWalls(this.state.grid, row, col);
     this.setState({ grid: wallGrid, mousePressed: true });
   }
 
   handleMouseDownHover(row, col) {
-    if (!this.state.mousePressed) return;
-    if (row === START_NODE_ROW && col === START_NODE_COL) return;
-    if (row === FINISH_NODE_ROW && col === FINISH_NODE_COL) return;
+    if (
+      !this.state.mousePressed &&
+      !this.state.newStartPressed &&
+      !this.state.newFinishPressed
+    )
+      return;
+
+    if (this.state.newStartPressed) {
+      const newStartGrid = getGridWithNewStart(this.state.grid, row, col);
+      this.setState({ grid: newStartGrid, newStartPressed: true });
+      return;
+    }
+
+    if (this.state.newFinishPressed) {
+      const newFinishGrid = getGridWithNewFinish(this.state.grid, row, col);
+      this.setState({ grid: newFinishGrid, newFinishPressed: true });
+      return;
+    }
+
     const wallGrid = getGridWithWalls(this.state.grid, row, col);
     this.setState({ grid: wallGrid, mousePressed: true });
   }
 
   handleMouseUp() {
     this.setState({ mousePressed: false });
+    this.setState({ newStartPressed: false });
+    this.setState({ newFinishPressed: false });
   }
 
   animateShortestPath(nodesInShortestPathOrder) {
@@ -89,6 +112,32 @@ export default class PathfindingVisualizer extends Component {
     }
   }
 
+  clearGridALL(grid) {
+    const createdGrid = grid.slice();
+    for (let row = 0; row < 21; row++) {
+      for (let col = 0; col < 35; col++) {
+        if (row === START_NODE_ROW && col === START_NODE_COL) {
+          document.getElementById(`node-${row}-${col}`).className =
+            "node startNode";
+          createdGrid[row][col].isVisited = false;
+        } else if (row === FINISH_NODE_ROW && col === FINISH_NODE_COL) {
+          document.getElementById(`node-${row}-${col}`).className =
+            "node finishNode";
+          createdGrid[row][col].isVisited = false;
+          createdGrid[row][col].previousNode = null;
+          createdGrid[row][col].distance = Infinity;
+        } else {
+          document.getElementById(`node-${row}-${col}`).className = "node";
+          createdGrid[row][col].isVisited = false;
+          createdGrid[row][col].distance = Infinity;
+          createdGrid[row][col].previousNode = null;
+          createdGrid[row][col].isWall = false;
+        }
+      }
+    }
+    this.setState({ grid: createdGrid });
+  }
+
   clearGrid(grid) {
     const createdGrid = grid.slice();
     for (let row = 0; row < 21; row++) {
@@ -103,6 +152,8 @@ export default class PathfindingVisualizer extends Component {
             document.getElementById(`node-${row}-${col}`).className =
               "node finishNode";
             createdGrid[row][col].isVisited = false;
+            createdGrid[row][col].previousNode = null;
+            createdGrid[row][col].distance = Infinity;
           }
           if (
             !(row === START_NODE_ROW && col === START_NODE_COL) &&
@@ -146,7 +197,9 @@ export default class PathfindingVisualizer extends Component {
           Visualize Dijkstras!
         </button>
         <button onClick={() => this.visualizeDFS()}>Visualize DFS!</button>
-        <button onClick={() => this.clearGrid(this.state.grid)}>CLEAR</button>
+        <button onClick={() => this.clearGridALL(this.state.grid)}>
+          CLEAR
+        </button>
         <div className="grid">
           {grid.map((row, rowIdx) => {
             return (
@@ -212,5 +265,29 @@ const getGridWithWalls = (grid, row, col) => {
     isWall: !node.isWall,
   };
   createdGrid[row][col] = createdNode;
+  return createdGrid;
+};
+
+const getGridWithNewStart = (grid, row, col) => {
+  const createdGrid = grid.slice();
+  document.getElementById(
+    `node-${START_NODE_ROW}-${START_NODE_COL}`
+  ).className = "node";
+  createdGrid[START_NODE_ROW][START_NODE_COL].isStart = false;
+  START_NODE_ROW = row;
+  START_NODE_COL = col;
+  createdGrid[START_NODE_ROW][START_NODE_COL].isStart = true;
+  return createdGrid;
+};
+
+const getGridWithNewFinish = (grid, row, col) => {
+  const createdGrid = grid.slice();
+  document.getElementById(
+    `node-${FINISH_NODE_ROW}-${FINISH_NODE_COL}`
+  ).className = "node";
+  createdGrid[FINISH_NODE_ROW][FINISH_NODE_COL].isFinish = false;
+  FINISH_NODE_ROW = row;
+  FINISH_NODE_COL = col;
+  createdGrid[FINISH_NODE_ROW][FINISH_NODE_COL].isFinish = true;
   return createdGrid;
 };
