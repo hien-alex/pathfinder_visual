@@ -21,7 +21,7 @@ export default class Node extends Component {
     return (
       <div
         onMouseDown={() => onMouseDown(row, col)}
-        onMouseOverCapture={() => onMouseDownHover(row, col)}
+        onMouseEnter={() => onMouseDownHover(row, col)}
         onMouseUp={() => onMouseUp(row, col)}
         id={`node-${row}-${col}`}
         className={`node ${isStart ? "startNode" : isFinish ? "finishNode" : ""}

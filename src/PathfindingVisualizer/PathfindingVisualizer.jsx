@@ -26,12 +26,19 @@ export default class PathfindingVisualizer extends Component {
   }
 
   handleMouseDown(row, col) {
+    if (row === START_NODE_ROW && col === START_NODE_COL) {
+      this.setState({ mousePressed: true });
+      return;
+    }
+    if (row === FINISH_NODE_ROW && col === FINISH_NODE_COL) return;
     const wallGrid = getGridWithWalls(this.state.grid, row, col);
     this.setState({ grid: wallGrid, mousePressed: true });
   }
 
   handleMouseDownHover(row, col) {
     if (!this.state.mousePressed) return;
+    if (row === START_NODE_ROW && col === START_NODE_COL) return;
+    if (row === FINISH_NODE_ROW && col === FINISH_NODE_COL) return;
     const wallGrid = getGridWithWalls(this.state.grid, row, col);
     this.setState({ grid: wallGrid, mousePressed: true });
   }
@@ -103,6 +110,8 @@ export default class PathfindingVisualizer extends Component {
           ) {
             document.getElementById(`node-${row}-${col}`).className = "node";
             createdGrid[row][col].isVisited = false;
+            createdGrid[row][col].distance = Infinity;
+            createdGrid[row][col].previousNode = null;
           }
         }
       }
