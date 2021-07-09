@@ -21,7 +21,6 @@
   animation-iteration-count: 1;
   animation-play-state: running;
   animation-fill-mode: forwards;
-  animation-direction: alternate;
 }
 
 @keyframes visitedNodesAnimation {
@@ -50,7 +49,38 @@
 }
 
 .shortestPathNode {
-  background-color: palegoldenrod;
+  animation-name: shortestPathNodesAnimation;
+  animation-duration: 1.3s;
+  animation-timing-function: ease-in-out;
+  animation-delay: 0;
+  animation-iteration-count: 1;
+  animation-play-state: running;
+  animation-fill-mode: forwards;
+}
+
+@keyframes shortestPathNodesAnimation {
+  0% {
+    transform: scale(0.3);
+    background-color: palegoldenrod;
+    outline: 0;
+    border-radius: 100%;
+  }
+
+  50% {
+    transform: scale(0.8);
+    background-color: palegoldenrod;
+    outline: 0;
+  }
+
+  75% {
+    transform: scale(0.9);
+    background-color: palegoldenrod;
+  }
+
+  100% {
+    background-color: palegoldenrod;
+    transform: scale(1);
+  }
 }
 
 .isWall {
