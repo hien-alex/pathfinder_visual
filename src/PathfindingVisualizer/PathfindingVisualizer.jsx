@@ -3,6 +3,7 @@ import Node from "./Node/Node";
 import "./Grid.css";
 import { dijkstra, getNodesInShortestPathOrder } from "../Algorithms/Dijkstras";
 import { DFS } from "../Algorithms/DepthFirstSearch";
+import { BFS } from "../Algorithms/BreadthFirstSearch";
 
 var START_NODE_ROW = 10;
 var START_NODE_COL = 5;
@@ -74,6 +75,8 @@ export default class PathfindingVisualizer extends Component {
     for (let i = 0; i < nodesInShortestPathOrder.length; i++) {
       setTimeout(() => {
         const node = nodesInShortestPathOrder[i];
+        if (node.row == START_NODE_ROW && node.col == START_NODE_COL) return;
+        if (node.row == FINISH_NODE_ROW && node.col == FINISH_NODE_COL) return;
         document.getElementById(`node-${node.row}-${node.col}`).className =
           "node shortestPathNode";
       }, 50 * i);
@@ -90,13 +93,15 @@ export default class PathfindingVisualizer extends Component {
       }
       setTimeout(() => {
         const node = visitedNodesInOrder[i];
+        if (node.row == START_NODE_ROW && node.col == START_NODE_COL) return;
+        if (node.row == FINISH_NODE_ROW && node.col == FINISH_NODE_COL) return;
         document.getElementById(`node-${node.row}-${node.col}`).className =
           "node visitedNode";
       }, 10 * i);
     }
   }
 
-  animateDFS(visitedNodesInOrder) {
+  animateDFSBFS(visitedNodesInOrder) {
     for (let i = 0; i <= visitedNodesInOrder.length; i++) {
       if (i === visitedNodesInOrder.length) {
         setTimeout(() => {
@@ -106,6 +111,8 @@ export default class PathfindingVisualizer extends Component {
       }
       setTimeout(() => {
         const node = visitedNodesInOrder[i];
+        if (node.row == START_NODE_ROW && node.col == START_NODE_COL) return;
+        if (node.row == FINISH_NODE_ROW && node.col == FINISH_NODE_COL) return;
         document.getElementById(`node-${node.row}-${node.col}`).className =
           "node visitedNode";
       }, 10 * i);
@@ -186,7 +193,16 @@ export default class PathfindingVisualizer extends Component {
     const startNode = grid[START_NODE_ROW][START_NODE_COL];
     const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
     const visitedNodesInOrder = DFS(grid, startNode, finishNode);
-    this.animateDFS(visitedNodesInOrder);
+    this.animateDFSBFS(visitedNodesInOrder);
+  }
+
+  visualizeBFS() {
+    this.clearGrid(this.state.grid);
+    const grid = this.state.grid;
+    const startNode = grid[START_NODE_ROW][START_NODE_COL];
+    const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
+    const visitedNodesInOrder = BFS(grid, startNode, finishNode);
+    this.animateDFSBFS(visitedNodesInOrder);
   }
 
   render() {
@@ -196,6 +212,7 @@ export default class PathfindingVisualizer extends Component {
         <button onClick={() => this.visualizeDijkstra()}>
           Visualize Dijkstras!
         </button>
+        <button onClick={() => this.visualizeBFS()}>Visualize BFS!</button>
         <button onClick={() => this.visualizeDFS()}>Visualize DFS!</button>
         <button onClick={() => this.clearGridALL(this.state.grid)}>
           CLEAR
