@@ -186,6 +186,9 @@ export default class PathfindingVisualizer extends Component {
             createdGrid[row][col].isVisited = false;
             createdGrid[row][col].previousNode = null;
             createdGrid[row][col].distance = Infinity;
+            createdGrid[row][col].fValue = Infinity;
+            createdGrid[row][col].hValue = 0;
+            createdGrid[row][col].gValue = 0;
           }
           if (
             !(row === START_NODE_ROW && col === START_NODE_COL) &&
@@ -195,6 +198,9 @@ export default class PathfindingVisualizer extends Component {
             createdGrid[row][col].isVisited = false;
             createdGrid[row][col].distance = Infinity;
             createdGrid[row][col].previousNode = null;
+            createdGrid[row][col].fValue = Infinity;
+            createdGrid[row][col].hValue = 0;
+            createdGrid[row][col].gValue = 0;
           }
         }
       }
