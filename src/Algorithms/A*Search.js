@@ -28,6 +28,7 @@ export function AStar(grid, startNode, finishNode) {
     if (lowestFValueNode === finishNode) return visitedNodesInOrder;
     updateNeighbours(lowestFValueNode, grid, queue, finishNode);
   }
+  return visitedNodesInOrder;
 }
 
 function getNeighbours(node, grid) {
