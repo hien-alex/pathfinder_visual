@@ -4,6 +4,7 @@ import "./Grid.css";
 import { dijkstra, getNodesInShortestPathOrder } from "../Algorithms/Dijkstras";
 import { DFS } from "../Algorithms/DepthFirstSearch";
 import { BFS } from "../Algorithms/BreadthFirstSearch";
+import { AStar } from "../Algorithms/A*Search";
 
 var START_NODE_ROW = 10;
 var START_NODE_COL = 5;
@@ -101,6 +102,24 @@ export default class PathfindingVisualizer extends Component {
     }
   }
 
+  animateAStar(visitedNodesInOrder, nodesInShortestPathOrder) {
+    for (let i = 0; i <= visitedNodesInOrder.length; i++) {
+      if (i === visitedNodesInOrder.length) {
+        setTimeout(() => {
+          this.animateShortestPath(nodesInShortestPathOrder);
+        }, 10 * i);
+        return;
+      }
+      setTimeout(() => {
+        const node = visitedNodesInOrder[i];
+        if (node.row == START_NODE_ROW && node.col == START_NODE_COL) return;
+        if (node.row == FINISH_NODE_ROW && node.col == FINISH_NODE_COL) return;
+        document.getElementById(`node-${node.row}-${node.col}`).className =
+          "node visitedNode";
+      }, 10 * i);
+    }
+  }
+
   animateDFSBFS(visitedNodesInOrder) {
     for (let i = 0; i <= visitedNodesInOrder.length; i++) {
       if (i === visitedNodesInOrder.length) {
@@ -133,12 +152,18 @@ export default class PathfindingVisualizer extends Component {
           createdGrid[row][col].isVisited = false;
           createdGrid[row][col].previousNode = null;
           createdGrid[row][col].distance = Infinity;
+          createdGrid[row][col].fValue = Infinity;
+          createdGrid[row][col].hValue = 0;
+          createdGrid[row][col].gValue = 0;
         } else {
           document.getElementById(`node-${row}-${col}`).className = "node";
           createdGrid[row][col].isVisited = false;
           createdGrid[row][col].distance = Infinity;
           createdGrid[row][col].previousNode = null;
           createdGrid[row][col].isWall = false;
+          createdGrid[row][col].fValue = Infinity;
+          createdGrid[row][col].hValue = 0;
+          createdGrid[row][col].gValue = 0;
         }
       }
     }
@@ -187,6 +212,16 @@ export default class PathfindingVisualizer extends Component {
     this.animateDijkstras(visitedNodesInOrder, nodesInShortestPathOrder);
   }
 
+  visualizeAStar() {
+    this.clearGrid(this.state.grid);
+    const grid = this.state.grid;
+    const startNode = grid[START_NODE_ROW][START_NODE_COL];
+    const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
+    const visitedNodesInOrder = AStar(grid, startNode, finishNode);
+    const nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode);
+    this.animateAStar(visitedNodesInOrder, nodesInShortestPathOrder);
+  }
+
   visualizeDFS() {
     this.clearGrid(this.state.grid);
     const grid = this.state.grid;
@@ -214,6 +249,7 @@ export default class PathfindingVisualizer extends Component {
         </button>
         <button onClick={() => this.visualizeBFS()}>Visualize BFS!</button>
         <button onClick={() => this.visualizeDFS()}>Visualize DFS!</button>
+        <button onClick={() => this.visualizeAStar()}>Visualize A*!</button>
         <button onClick={() => this.clearGridALL(this.state.grid)}>
           CLEAR
         </button>
@@ -259,6 +295,9 @@ const createNode = (col, row) => {
     isVisited: false,
     isWall: false,
     previousNode: null,
+    hValue: 0,
+    gValue: 0,
+    fValue: Infinity,
   };
 };
 
