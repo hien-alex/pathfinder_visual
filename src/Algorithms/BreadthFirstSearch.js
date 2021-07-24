@@ -14,56 +14,40 @@ export function BFS(grid, startNode, finishNode) {
   ];
 
   var currentNode = startNode;
-  var queue = [];
-  var finished = false;
+  const queue = [];
 
+  console.log(currentNode);
   queue.push(currentNode);
+  console.log(queue);
 
-  function traverse() {
-    while (queue.length !== 0 && !finished) {
-      if (currentNode.isVisited) {
-        currentNode = queue.pop(0);
-        continue;
-      }
+  while (queue.length !== 0) {
+    currentNode = queue.shift();
+    if (currentNode.isVisited) continue;
+    currentNode.isVisited = true;
+    if (currentNode.isWall) continue;
+    visitedInOrder.push(currentNode);
 
-      currentNode.isVisited = true;
+    if (currentNode === finishNode) {
+      return visitedInOrder;
+    }
+
+    for (let i = 0; i < 4; i++) {
+      var nextRow = currentNode.row + directions[i][0];
+      var nextCol = currentNode.col + directions[i][1];
 
       if (
-        currentNode.row === finishNode.row &&
-        currentNode.col === finishNode.col
+        0 <= nextRow &&
+        nextRow < rowsLength &&
+        0 <= nextCol &&
+        nextCol < colsLength
       ) {
-        finished = true;
-        visitedInOrder.push(currentNode);
-        return visitedInOrder;
-      }
-
-      if (currentNode.isWall) {
-        currentNode = queue.pop(0);
-        continue;
-      }
-
-      visitedInOrder.push(currentNode);
-
-      for (const direction of directions) {
-        if (finished === true) return visitedInOrder;
-        var nextRow = currentNode.row + direction[0];
-        var nextCol = currentNode.col + direction[1];
-
-        if (
-          0 <= nextRow &&
-          nextRow < rowsLength &&
-          0 <= nextCol &&
-          nextCol < colsLength
-        ) {
+        if (!grid[nextRow][nextCol].isVisited) {
+          console.log(grid[nextRow][nextCol].isVisited);
+          console.log(nextRow, nextCol);
           queue.push(grid[nextRow][nextCol]);
-        } else {
-          continue;
         }
       }
-      currentNode = queue.pop(0);
     }
-    return visitedInOrder;
   }
-  traverse();
   return visitedInOrder;
 }

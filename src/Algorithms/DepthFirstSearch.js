@@ -30,10 +30,10 @@ export function DFS(grid, startNode, finishNode) {
       return visitedInOrder;
     }
 
-    for (const direction of directions) {
+    for (let i = 0; i < 4; i++) {
       if (finished) return visitedInOrder;
-      var nextRow = node.row + direction[0];
-      var nextCol = node.col + direction[1];
+      var nextRow = node.row + directions[i][0];
+      var nextCol = node.col + directions[i][1];
       if (
         0 <= nextRow &&
         nextRow < rowsLength &&
