@@ -16,9 +16,7 @@ export function BFS(grid, startNode, finishNode) {
   var currentNode = startNode;
   const queue = [];
 
-  console.log(currentNode);
   queue.push(currentNode);
-  console.log(queue);
 
   while (queue.length !== 0) {
     currentNode = queue.shift();
@@ -42,8 +40,7 @@ export function BFS(grid, startNode, finishNode) {
         nextCol < colsLength
       ) {
         if (!grid[nextRow][nextCol].isVisited) {
-          console.log(grid[nextRow][nextCol].isVisited);
-          console.log(nextRow, nextCol);
+          grid[nextRow][nextCol].previousNode = currentNode;
           queue.push(grid[nextRow][nextCol]);
         }
       }

@@ -120,11 +120,11 @@ export default class PathfindingVisualizer extends Component {
     }
   }
 
-  animateDFSBFS(visitedNodesInOrder) {
+  animateDFSBFS(visitedNodesInOrder, nodesInShortestPathOrder) {
     for (let i = 0; i <= visitedNodesInOrder.length; i++) {
       if (i === visitedNodesInOrder.length) {
         setTimeout(() => {
-          this.animateShortestPath(visitedNodesInOrder);
+          this.animateShortestPath(nodesInShortestPathOrder);
         }, 10 * i);
         return;
       }
@@ -235,7 +235,7 @@ export default class PathfindingVisualizer extends Component {
     const startNode = grid[START_NODE_ROW][START_NODE_COL];
     const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
     const visitedNodesInOrder = DFS(grid, startNode, finishNode);
-    this.animateDFSBFS(visitedNodesInOrder);
+    this.animateDFSBFS(visitedNodesInOrder, visitedNodesInOrder);
   }
 
   visualizeBFS() {
@@ -244,7 +244,8 @@ export default class PathfindingVisualizer extends Component {
     const startNode = grid[START_NODE_ROW][START_NODE_COL];
     const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
     const visitedNodesInOrder = BFS(grid, startNode, finishNode);
-    this.animateDFSBFS(visitedNodesInOrder);
+    const nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode);
+    this.animateDFSBFS(visitedNodesInOrder, nodesInShortestPathOrder);
   }
 
   render() {
