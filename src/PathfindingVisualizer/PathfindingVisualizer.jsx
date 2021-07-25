@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import Node from "./Node/Node";
 import "./Grid.css";
+import "./mainPage.css";
 import { dijkstra, getNodesInShortestPathOrder } from "../Algorithms/Dijkstras";
 import { DFS } from "../Algorithms/DepthFirstSearch";
 import { BFS } from "../Algorithms/BreadthFirstSearch";
 import { AStar } from "../Algorithms/A*Search";
+import { Button } from "@material-ui/core";
 
 var START_NODE_ROW = 10;
 var START_NODE_COL = 5;
@@ -252,15 +254,26 @@ export default class PathfindingVisualizer extends Component {
     const grid = this.state.grid;
     return (
       <>
-        <button onClick={() => this.visualizeDijkstra()}>
-          Visualize Dijkstras!
-        </button>
-        <button onClick={() => this.visualizeBFS()}>Visualize BFS!</button>
-        <button onClick={() => this.visualizeDFS()}>Visualize DFS!</button>
-        <button onClick={() => this.visualizeAStar()}>Visualize A*!</button>
-        <button onClick={() => this.clearGridALL(this.state.grid)}>
-          CLEAR
-        </button>
+        <div className="buttonsHeader">
+          <Button variant="outlined" onClick={() => this.visualizeDijkstra()}>
+            Visualize Dijkstras!
+          </Button>
+          <Button variant="outlined" onClick={() => this.visualizeBFS()}>
+            Visualize BFS!
+          </Button>
+          <Button variant="outlined" onClick={() => this.visualizeDFS()}>
+            Visualize DFS!
+          </Button>
+          <Button variant="outlined" onClick={() => this.visualizeAStar()}>
+            Visualize A*!
+          </Button>
+          <Button
+            variant="outlined"
+            onClick={() => this.clearGridALL(this.state.grid)}
+          >
+            CLEAR
+          </Button>
+        </div>
         <div className="grid">
           {grid.map((row, rowIdx) => {
             return (

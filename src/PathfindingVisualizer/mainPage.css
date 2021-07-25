@@ -1,0 +1,7 @@
+.buttonsHeader {
+  margin: auto;
+  padding-top: 2.5%;
+  width: 50%;
+  display: flex;
+  justify-content: space-evenly;
+}
