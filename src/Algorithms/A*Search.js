@@ -1,6 +1,5 @@
 // We will use Manhattan Distance to find Heuristics of each node
-// h = abs (current_cell.x – goal.x) +
-// abs (current_cell.y – goal.y)
+// h = abs (current_cell.x – goal.x) + abs (current_cell.y – goal.y)
 // G is the distance between current and start node
 // H is estimation of current and end node
 // F is the total cost of node -> g + h
