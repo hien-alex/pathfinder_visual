@@ -87,9 +87,13 @@ export default class PathfindingVisualizer extends Component {
           "node shortestPathNode";
       }, 50 * i);
     }
+    setTimeout(() => {
+      this.setState({ isRunning: false });
+    }, 50 * nodesInShortestPathOrder.length);
   }
 
   animateDijkstras(visitedNodesInOrder, nodesInShortestPathOrder) {
+    this.setState({ isRunning: true });
     for (let i = 0; i <= visitedNodesInOrder.length; i++) {
       if (i === visitedNodesInOrder.length) {
         setTimeout(() => {
@@ -108,6 +112,7 @@ export default class PathfindingVisualizer extends Component {
   }
 
   animateAStar(visitedNodesInOrder, nodesInShortestPathOrder) {
+    this.setState({ isRunning: true });
     for (let i = 0; i <= visitedNodesInOrder.length; i++) {
       if (i === visitedNodesInOrder.length) {
         setTimeout(() => {
@@ -126,6 +131,7 @@ export default class PathfindingVisualizer extends Component {
   }
 
   animateDFSBFS(visitedNodesInOrder, nodesInShortestPathOrder) {
+    this.setState({ isRunning: true });
     for (let i = 0; i <= visitedNodesInOrder.length; i++) {
       if (i === visitedNodesInOrder.length) {
         setTimeout(() => {
@@ -224,12 +230,12 @@ export default class PathfindingVisualizer extends Component {
   }
 
   visualizeAStar() {
+    this.setState({ isRunning: true });
     this.clearGrid(this.state.grid);
     const grid = this.state.grid;
     const startNode = grid[START_NODE_ROW][START_NODE_COL];
     const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
     const visitedNodesInOrder = AStar(grid, startNode, finishNode);
-    console.log(visitedNodesInOrder);
     const nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode);
     this.animateAStar(visitedNodesInOrder, nodesInShortestPathOrder);
   }
@@ -258,7 +264,7 @@ export default class PathfindingVisualizer extends Component {
     return (
       <>
         <div
-          className={`buttonsHeader ${this.state.isRunning} ? "running" : ""`}
+          className={`buttonsHeader ${this.state.isRunning ? "running" : ""}`}
         >
           <Button variant="outlined" onClick={() => this.visualizeDijkstra()}>
             Visualize Dijkstras
