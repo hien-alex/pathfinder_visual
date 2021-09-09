@@ -1,3 +1,7 @@
 .grid {
   margin-top: 2.5%;
 }
+
+.running {
+  pointer-events: none;
+}

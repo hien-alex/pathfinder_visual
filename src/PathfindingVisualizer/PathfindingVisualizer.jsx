@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useState, useEffect } from "react";
 import Node from "./Node/Node";
 import "./Grid.css";
 import "./mainPage.css";
@@ -22,6 +22,7 @@ export default class PathfindingVisualizer extends Component {
       newStartPressed: false,
       newFinishPressed: false,
       initialGrid: [],
+      isRunning: false,
     };
   }
 
@@ -256,18 +257,20 @@ export default class PathfindingVisualizer extends Component {
     const grid = this.state.grid;
     return (
       <>
-        <div className="buttonsHeader">
+        <div
+          className={`buttonsHeader ${this.state.isRunning} ? "running" : ""`}
+        >
           <Button variant="outlined" onClick={() => this.visualizeDijkstra()}>
-            Visualize Dijkstras!
+            Visualize Dijkstras
           </Button>
           <Button variant="outlined" onClick={() => this.visualizeBFS()}>
-            Visualize BFS!
+            Visualize BFS
           </Button>
           <Button variant="outlined" onClick={() => this.visualizeDFS()}>
-            Visualize DFS!
+            Visualize DFS
           </Button>
           <Button variant="outlined" onClick={() => this.visualizeAStar()}>
-            Visualize A*!
+            Visualize A*
           </Button>
           <Button
             variant="outlined"
@@ -276,7 +279,8 @@ export default class PathfindingVisualizer extends Component {
             CLEAR
           </Button>
         </div>
-        <div className="grid">
+        {/* className={`node ${isStart ? "startNode" : isFinish ? "finishNode" : ""} */}
+        <div className={`grid ${this.state.isRunning ? "running" : ""}`}>
           {grid.map((row, rowIdx) => {
             return (
               <div key={rowIdx}>
