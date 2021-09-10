@@ -312,7 +312,11 @@ export default class PathfindingVisualizer extends Component {
           <Button variant="outlined" onClick={() => this.visualizeDFS()}>
             Visualize DFS
           </Button>
-          <Button variant="outlined" onClick={() => this.visualizeAStar()}>
+          <Button
+            // disabled={true}
+            variant="outlined"
+            onClick={() => this.visualizeAStar()}
+          >
             Visualize A*
           </Button>
           <Button

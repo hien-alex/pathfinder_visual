@@ -20,6 +20,7 @@ export function AStar(grid, startNode, finishNode) {
   while (!!queue.length) {
     sortNodesByFValue(queue);
     const lowestFValueNode = queue.shift();
+    console.log(queue);
     if (lowestFValueNode.isWall) continue;
     if (lowestFValueNode.fValue === Infinity) return visitedNodesInOrder;
     lowestFValueNode.isVisited = true;
@@ -46,6 +47,18 @@ function getNeighbours(node, grid) {
   }
   if (col < grid[0].length - 1) {
     neighbours.push(grid[row][col + 1]);
+  }
+  if (row > 0 && col > 0) {
+    neighbours.push(grid[row - 1][col - 1]);
+  }
+  if (row > 0 && col < grid[0].length - 1) {
+    neighbours.push(grid[row - 1][col + 1]);
+  }
+  if (row < grid.length - 1 && 0 < col) {
+    neighbours.push(grid[row + 1][col - 1]);
+  }
+  if (row < grid.length - 1 && col < grid[0].length - 1) {
+    neighbours.push(grid[row + 1][col + 1]);
   }
   return neighbours;
 }

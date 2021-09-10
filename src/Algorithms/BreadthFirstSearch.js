@@ -1,6 +1,6 @@
 export function BFS(grid, startNode, finishNode) {
   if (!startNode || !finishNode || startNode === finishNode) {
-    return false;
+    alert("Start/End node must exist and cannot be the same!");
   }
 
   const visitedInOrder = [];
