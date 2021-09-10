@@ -9,3 +9,23 @@
 .running {
   pointer-events: none;
 }
+
+.infoModal {
+  margin: auto;
+  height: 350px;
+  width: 350px;
+  margin-top: 250px;
+}
+
+.green {
+  color: green;
+}
+
+.red {
+  color: red;
+}
+
+.modalContent {
+  padding-top: 40px;
+  text-align: center;
+}

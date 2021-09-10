@@ -6,7 +6,9 @@ import { dijkstra, getNodesInShortestPathOrder } from "../Algorithms/Dijkstras";
 import { DFS } from "../Algorithms/DepthFirstSearch";
 import { BFS } from "../Algorithms/BreadthFirstSearch";
 import { AStar } from "../Algorithms/A*Search";
-import { Button } from "@material-ui/core";
+import { Button, Paper, IconButton } from "@material-ui/core";
+import { Modal } from "@material-ui/core";
+import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
 
 var START_NODE_ROW = 10;
 var START_NODE_COL = 5;
@@ -23,6 +25,7 @@ export default class PathfindingVisualizer extends Component {
       newFinishPressed: false,
       initialGrid: [],
       isRunning: false,
+      openModal: true,
     };
   }
 
@@ -263,6 +266,40 @@ export default class PathfindingVisualizer extends Component {
     const grid = this.state.grid;
     return (
       <>
+        <IconButton onClick={() => this.setState({ openModal: true })}>
+          <HelpOutlineIcon />
+        </IconButton>
+        <Modal
+          onBackdropClick={() => this.setState({ openModal: false })}
+          open={this.state.openModal}
+          aria-labelledby="simple-modal-title"
+          aria-describedby="simple-modal-description"
+        >
+          <Paper className="infoModal">
+            <div className="modalContent">
+              <h2 id="simple-modal-title">Welcome to my Pathfinder!</h2>
+              <p id="simple-modal-description">
+                Left click and drag to move the{" "}
+                <span className="green">starting node</span> and{" "}
+                <span className="red">ending node</span>.
+                <br />
+                <br />
+                Left click empty nodes to create walls.
+                <br />
+                <br />
+                Have fun!
+              </p>
+              <br />
+              <br />
+              <Button
+                variant="outlined"
+                onClick={() => this.setState({ openModal: false })}
+              >
+                Close
+              </Button>
+            </div>
+          </Paper>
+        </Modal>
         <div
           className={`buttonsHeader ${this.state.isRunning ? "running" : ""}`}
         >
