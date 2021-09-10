@@ -290,7 +290,6 @@ export default class PathfindingVisualizer extends Component {
                 Have fun!
               </p>
               <br />
-              <br />
               <Button
                 variant="outlined"
                 onClick={() => this.setState({ openModal: false })}
