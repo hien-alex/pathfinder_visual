@@ -58,14 +58,14 @@ export default class PathfindingVisualizer extends Component {
 
     if (this.state.newStartPressed) {
       const newStartGrid = getGridWithNewStart(this.state.grid, row, col);
-      this.clearGridALL(this.state.grid);
+      this.clearGrid(this.state.grid);
       this.setState({ grid: newStartGrid, newStartPressed: true });
       return;
     }
 
     if (this.state.newFinishPressed) {
       const newFinishGrid = getGridWithNewFinish(this.state.grid, row, col);
-      this.clearGridALL(this.state.grid);
+      this.clearGrid(this.state.grid);
       this.setState({ grid: newFinishGrid, newFinishPressed: true });
       return;
     }
